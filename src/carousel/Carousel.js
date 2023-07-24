@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Animated, Easing, FlatList, I18nManager, Platform, ScrollView, View, ViewPropTypes } from 'react-native';
 import PropTypes from 'prop-types';
-import shallowCompare from 'react-addons-shallow-compare';
 import {
     defaultScrollInterpolator,
     stackScrollInterpolator,
@@ -25,7 +24,7 @@ const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 // otherwise it is undefined at init, which messes with custom indexes
 const IS_RTL = I18nManager.isRTL;
 
-export default class Carousel extends Component {
+export default class Carousel extends React.PureComponent {
 
     static propTypes = {
         data: PropTypes.array.isRequired,
@@ -201,14 +200,6 @@ export default class Carousel extends Component {
                 apparitionCallback();
             }
         });
-    }
-
-    shouldComponentUpdate (nextProps, nextState) {
-        if (this.props.shouldOptimizeUpdates === false) {
-            return true;
-        } else {
-            return shallowCompare(this, nextProps, nextState);
-        }
     }
 
     componentDidUpdate (prevProps) {
